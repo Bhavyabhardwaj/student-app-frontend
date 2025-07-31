@@ -8,21 +8,25 @@ import Login from './pages/auth/login';
 import Signup from './pages/auth/signup';
  import Goal from './pages/goal';
  import Dashboard from './pages/dashboard';
+ import layout from './layout/layout'
+import Layout from './layout/layout';
 
 
 export default function App() {
   return (
-   <Routes>
-       <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-         <Route path="/signup" element={<Signup/>} />
+    <Layout><Home/>
+    </Layout>
+  //  <Routes>
+  //      <Route path="/" element={<Home />} />
+  //       <Route path="/login" element={<Login />} />
+  //        <Route path="/signup" element={<Signup/>} />
         
-        <Route path="/goal" element={<Goal />} />
+  //       <Route path="/goal" element={<Goal />} />
         
-       <Route path="/dashboard" element={<Dashboard />} />
+  //      <Route path="/dashboard" element={<Dashboard />} />
 
 
-   </Routes>
+  //  </Routes>
 
   );
 }
