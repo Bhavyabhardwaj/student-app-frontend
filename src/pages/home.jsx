@@ -3,13 +3,15 @@ import SVG from '../assets/presentation-svgrepo-com.svg';
 import { motion } from 'framer-motion';
 import { FaUserGraduate, FaSearch, FaChartLine } from "react-icons/fa";
 import { MdOutlineRocketLaunch } from "react-icons/md";
+import Layout from '../layout/layout';
 
 export default function Home() {
   return (
+    <Layout>
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-700 flex flex-col">
       
       
-      {/* 🔷 Main Hero */}
+      {/*  Main section */}
       <div className="flex-grow flex items-center justify-center px-6">
         <div className="max-w-6xl w-full grid md:grid-cols-2 gap-12 items-center">
 
@@ -54,7 +56,7 @@ export default function Home() {
               </button>
             </Link>
 
-            {/* 🧠 Motivational Quote */}
+            {/* Motivational Quote */}
             <blockquote className="text-sm italic text-gray-600 mt-6">
               "Success doesn’t come from what you do occasionally, it comes from what you do consistently."
             </blockquote>
@@ -254,6 +256,7 @@ export default function Home() {
 
 
     </div>
+    </Layout>
 
   );
 }

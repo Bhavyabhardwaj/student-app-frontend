@@ -10,23 +10,28 @@ import Signup from './pages/auth/signup';
  import Dashboard from './pages/dashboard';
  import layout from './layout/layout'
 import Layout from './layout/layout';
+import RoadmapPage from './pages/roadmap';
+import PageNotFound from './pages/pageNotFound';
 
 
 export default function App() {
   return (
-    <Layout><Home/>
-    </Layout>
-  //  <Routes>
-  //      <Route path="/" element={<Home />} />
-  //       <Route path="/login" element={<Login />} />
-  //        <Route path="/signup" element={<Signup/>} />
-        
-  //       <Route path="/goal" element={<Goal />} />
-        
-  //      <Route path="/dashboard" element={<Dashboard />} />
+    <>
+    <Routes>
+        <Route path="/" element={<Home />} />
+         <Route path="/signup" element={<Signup/>} />
+         <Route path="/login" element={<Login />} />
+         <Route path="/dashboard" element={<Dashboard />} />
+         <Route path="/goal" element={<Goal />} />
+          <Route path="/roadmap" element={<RoadmapPage/>} />
 
 
-  //  </Routes>
+
+          <Route path="*" element={<PageNotFound/>} />
+    </Routes>
+    
+    </>
+ 
 
   );
 }

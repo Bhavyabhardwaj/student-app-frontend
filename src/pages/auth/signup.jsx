@@ -1,54 +1,70 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import axios from '../../api/axios'; // <-- baseURL set hona chahiye 5500 pe
+import toast from 'react-hot-toast'
+import { useDispatch } from "react-redux";
+import { createAccount } from "../../redux/slices/authSlice";
 
 export default function Signup() {
-  const navigate = useNavigate();
-  const [form, setForm] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    password: '',
-    confirmPassword: '',
-    mobileNumber: '',
-  });
+  
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
-  const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-  };
+    const [signUpState, setSignUpState] = useState({
+        firstName: '',
+        email: '',
+        mobileNumber: '',
+        password: ''
+    });
 
-  const handleSignup = async (e) => {
-    e.preventDefault();
-
-    if (form.password !== form.confirmPassword) {
-      alert('Passwords do not match');
-      return;
+    function handleUserInput(e) {
+       const {name, value} = e.target;
+       setSignUpState({
+        ...signUpState,
+        [name]: value
+       })
     }
 
-    try {
-      const res = await axios.post('/users', {
-        firstName: form.firstName,
-        lastName: form.lastName,
-        email: form.email,
-        password: form.password,
-        mobileNumber: form.mobileNumber,
-      });
+    async function handleFormSubmit(e) {
+        e.preventDefault(); // prevent the form from reloading the page
+        console.log(signUpState);
 
-      console.log('Signup success:', res.data);
-      alert('Signup successful!');
-      navigate('/login'); // You can also auto-login or go to dashboard
-    } catch (err) {
-      console.error(err.response?.data || err.message);
-      alert('Signup failed: ' + (err.response?.data?.message || 'Server error'));
-    }
-  };
+        // Add validations for the form input
+        if(!signUpState.email || !signUpState.mobileNumber || !signUpState.password || !signUpState.firstName) {
+            toast.error("Missing values from the form")
+            return;
+        }
+
+        if(signUpState.firstName.length < 5 || signUpState.firstName.length > 20) {
+            toast.error("First name should be atleast 5 characters long and maximum 20 characters long")
+            return;
+        }
+
+        // check email
+        if(!signUpState.email.includes('@') || !signUpState.email.includes('.')) {
+            toast.error("Invalid email address")
+            return;
+        }
+
+        // check mobile number length to be between 10-12
+        if(signUpState.mobileNumber.length < 10 || signUpState.mobileNumber.length > 12) {
+            toast.error("Mobile number should be between 10-12 characters")
+            return;
+        }
+
+        const apiReponse = await dispatch(createAccount(signUpState));
+        console.log("Api response", apiReponse);
+        if(apiReponse.payload.data.success) {
+            navigate('/login');
+        }
+    };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-700 flex items-center justify-center px-4">
       <div className="w-full max-w-md bg-white rounded-xl shadow-lg p-8">
         <h2 className="text-3xl font-bold text-center text-indigo-700 mb-6">Signup</h2>
 
-        <form onSubmit={handleSignup} className="space-y-4">
+        <form onSubmit={handleFormSubmit} className="space-y-4">
           <div>
             <label htmlFor="firstName" className="block text-sm font-medium text-gray-700">First Name</label>
             <input
@@ -56,8 +72,8 @@ export default function Signup() {
               name="firstName"
               type="text"
               className="w-full px-4 py-2 border rounded-md"
-              value={form.firstName}
-              onChange={handleChange}
+              value={signUpState.firstName}
+              onChange={handleUserInput}
               required
             />
           </div>
@@ -69,8 +85,8 @@ export default function Signup() {
               name="lastName"
               type="text"
               className="w-full px-4 py-2 border rounded-md"
-              value={form.lastName}
-              onChange={handleChange}
+              value={signUpState.lastName}
+              onChange={handleUserInput}
               required
             />
           </div>
@@ -82,8 +98,8 @@ export default function Signup() {
               name="email"
               type="email"
               className="w-full px-4 py-2 border rounded-md"
-              value={form.email}
-              onChange={handleChange}
+              value={signUpState.email}
+              onChange={handleUserInput}
               required
             />
           </div>
@@ -95,8 +111,8 @@ export default function Signup() {
               name="mobileNumber"
               type="text"
               className="w-full px-4 py-2 border rounded-md"
-              value={form.mobileNumber}
-              onChange={handleChange}
+              value={signUpState.mobileNumber}
+              onChange={handleUserInput}
               required
             />
           </div>
@@ -108,8 +124,8 @@ export default function Signup() {
               name="password"
               type="password"
               className="w-full px-4 py-2 border rounded-md"
-              value={form.password}
-              onChange={handleChange}
+              value={signUpState.password}
+              onChange={handleUserInput}
               required
             />
           </div>
@@ -121,8 +137,8 @@ export default function Signup() {
               name="confirmPassword"
               type="password"
               className="w-full px-4 py-2 border rounded-md"
-              value={form.confirmPassword}
-              onChange={handleChange}
+              value={signUpState.confirmPassword}
+              onChange={handleUserInput}
               required
             />
           </div>
