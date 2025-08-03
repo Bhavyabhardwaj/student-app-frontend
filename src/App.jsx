@@ -12,6 +12,7 @@ import Signup from './pages/auth/signup';
 import Layout from './layout/layout';
 import RoadmapPage from './pages/roadmap';
 import PageNotFound from './pages/pageNotFound';
+import Calendar from './pages/navbarPages/calender';
 
 
 export default function App() {
@@ -24,6 +25,7 @@ export default function App() {
          <Route path="/dashboard" element={<Dashboard />} />
          <Route path="/goal" element={<Goal />} />
           <Route path="/roadmap" element={<RoadmapPage/>} />
+           <Route path="/calendar" element={<Calendar/>} />
 
 
 

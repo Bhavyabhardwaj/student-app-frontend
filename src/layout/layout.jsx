@@ -25,7 +25,7 @@ function Layout({ children }) {
                 <div className="hidden md:block">
                     <ul className="flex gap-6 text-sm font-bold px-20">
                         <li className="hover:text-indigo-600 cursor-pointer" onClick={() => navigate('/')}>Home</li>
-                        <li className="hover:text-indigo-600 cursor-pointer" onClick={() => navigate('/goals')}>Goals</li>
+                        <li className="hover:text-indigo-600 cursor-pointer" onClick={() => navigate('/goal')}>Goals</li>
                         <li className="hover:text-indigo-600 cursor-pointer" onClick={() => navigate('/calendar')}>Calendar</li>
                         <li className="hover:text-indigo-600 cursor-pointer" onClick={() => navigate('/resources')}>Resources</li>
                         <li className="hover:text-indigo-600 cursor-pointer" onClick={() => navigate('/achievements')}>Achievements</li>
@@ -33,8 +33,8 @@ function Layout({ children }) {
                         <li className="hover:text-indigo-600 cursor-pointer" onClick={() => navigate('/folders')}>Study Material</li>
                         <li className="hover:text-indigo-600 cursor-pointer" onClick={() => navigate('/profile')}><img src={profileSVG} className='h-10 w-auto'/></li>
                         <li className="hover:text-indigo-600 cursor-pointer" onClick={() => navigate('/notifications')}><img src={notificationSVG} className='h-6 w-auto'/></li>
-                        <li className="hover:text-indigo-600 cursor-pointer" onClick={() => navigate('/logout')}> <img src={logoutSVG} className="h-6 w-auto " />
-</li>
+                        {/*<li className="hover:text-indigo-600 cursor-pointer" onClick={() => navigate('/logout')}> <img src={logoutSVG} className="h-6 w-auto " />
+</li>*/}
                     </ul>
                 </div>
             </nav>

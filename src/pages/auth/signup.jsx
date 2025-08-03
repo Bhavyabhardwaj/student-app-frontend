@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import axios from '../../api/axios'; // <-- baseURL set hona chahiye 5500 pe
+import axios from '../../api/axios'; 
 import toast from 'react-hot-toast'
 import { useDispatch } from "react-redux";
 import { createAccount } from "../../redux/slices/authSlice";
+import Layout from '../../layout/layout';
 
 export default function Signup() {
   
@@ -29,7 +30,6 @@ export default function Signup() {
         e.preventDefault(); // prevent the form from reloading the page
         console.log(signUpState);
 
-        // Add validations for the form input
         if(!signUpState.email || !signUpState.mobileNumber || !signUpState.password || !signUpState.firstName) {
             toast.error("Missing values from the form")
             return;
@@ -40,13 +40,12 @@ export default function Signup() {
             return;
         }
 
-        // check email
         if(!signUpState.email.includes('@') || !signUpState.email.includes('.')) {
             toast.error("Invalid email address")
             return;
         }
 
-        // check mobile number length to be between 10-12
+  
         if(signUpState.mobileNumber.length < 10 || signUpState.mobileNumber.length > 12) {
             toast.error("Mobile number should be between 10-12 characters")
             return;
@@ -55,12 +54,13 @@ export default function Signup() {
         const apiReponse = await dispatch(createAccount(signUpState));
         console.log("Api response", apiReponse);
         if(apiReponse.payload.data.success) {
-            navigate('/login');
+            navigate('/goal');
         }
     };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-700 flex items-center justify-center px-4">
+    <Layout>
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-700 flex items-center justify-center px-4 py-auto">
       <div className="w-full max-w-md bg-white rounded-xl shadow-lg p-8">
         <h2 className="text-3xl font-bold text-center text-indigo-700 mb-6">Signup</h2>
 
@@ -157,5 +157,6 @@ export default function Signup() {
         </p>
       </div>
     </div>
+    </Layout>
   );
 }

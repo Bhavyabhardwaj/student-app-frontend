@@ -3,6 +3,8 @@ import { useNavigate, Link } from 'react-router-dom';
 import { useDispatch } from "react-redux";
 import { login } from "../../redux/slices/authSlice";
 import toast from 'react-hot-toast';
+import Layout from '../../layout/layout';
+
 
 export default function Login() {
   const dispatch = useDispatch();
@@ -30,6 +32,7 @@ export default function Login() {
       toast.error("Missing values from the form");
       return;
     }
+   
 
     if (!loginData.email.includes('@') || !loginData.email.includes('.')) {
       setErrorMsg("Invalid email address");
@@ -48,6 +51,7 @@ export default function Login() {
   }
 
   return (
+    <Layout>
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-700 flex items-center justify-center px-4">
       <div className="w-full max-w-md bg-white rounded-xl shadow-lg p-8">
         <h2 className="text-3xl font-bold text-center text-indigo-700 mb-6">Login</h2>
@@ -97,5 +101,6 @@ export default function Login() {
         </p>
       </div>
     </div>
+    </Layout>
   );
 }
