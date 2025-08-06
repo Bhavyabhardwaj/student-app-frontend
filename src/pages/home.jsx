@@ -4,10 +4,11 @@ import { motion } from 'framer-motion';
 import { FaUserGraduate, FaSearch, FaChartLine } from "react-icons/fa";
 import { MdOutlineRocketLaunch } from "react-icons/md";
 import Layout from '../layout/layout';
+import Layout2 from '../layout/layout2';
 
 export default function Home() {
   return (
-    <Layout>
+    <Layout2>
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-700 flex flex-col">
       
       
@@ -256,7 +257,7 @@ export default function Home() {
 
 
     </div>
-    </Layout>
+   </Layout2>
 
   );
 }

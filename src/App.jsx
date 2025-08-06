@@ -13,6 +13,9 @@ import Layout from './layout/layout';
 import RoadmapPage from './pages/roadmap';
 import PageNotFound from './pages/pageNotFound';
 import Calendar from './pages/navbarPages/calender';
+import AboutUs from './pages/navbarPages/aboutUs';
+import ContactUs from './pages/navbarPages/contactUs';
+import GetPremium from './pages/navbarPages/premium';
 
 
 export default function App() {
@@ -25,7 +28,16 @@ export default function App() {
          <Route path="/dashboard" element={<Dashboard />} />
          <Route path="/goal" element={<Goal />} />
           <Route path="/roadmap" element={<RoadmapPage/>} />
+
+
+
+
+
+
            <Route path="/calendar" element={<Calendar/>} />
+           <Route path="/about" element={<AboutUs/>} />
+           <Route path="/contact" element={<ContactUs/>} />
+             <Route path="premium" element={<GetPremium/>} />
 
 
 

@@ -1,83 +1,76 @@
-// src/redux/slices/roadmapSlice.js
-
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axiosInstance from "../../api/axios";
 import toast from "react-hot-toast";
 
 const initialState = {
-  roadmapContent: null,
   loading: false,
   error: null,
+  roadmap: "",
 };
 
-export const addGoal = createAsyncThunk('/goal/add', async () => {
-    console.log("incoming data to the thunk");
-    try {
-        const response = axiosInstance.post('/goal/addGoal');    
-        toast.promise(response, {
-            success: (resolvedPromise) => {
-                return resolvedPromise?.data?.message;
-            },
-            loading: 'adding goal...',
-            error: 'Ohh No!, Something went wrong. Please try again.',
-        });
-        const apiResponse = await response;
-        return apiResponse;
-    } catch(error) {
-        console.log(error);
-    }
+// ========== Thunks ==========
+
+export const addGoal = createAsyncThunk('/goal/add', async (payload, { rejectWithValue }) => {
+  try {
+    const responsePromise = axiosInstance.post('/goal/addGoal', payload);
+    toast.promise(responsePromise, {
+      success: (res) => res?.data?.message || "Goal added!",
+      loading: "Adding goal...",
+      error: "Oh no! Something went wrong.",
+    });
+    const response = await responsePromise;
+    return response.data;
+  } catch (error) {
+    return rejectWithValue(error.response?.data?.message || "Failed to add goal");
+  }
 });
 
-export const generateRoadmap = createAsyncThunk('/roadmap/generateThunk', async (data) => {
+export const generateRoadmap = createAsyncThunk('/roadmap/generate', async (payload, { rejectWithValue }) => {
   try {
-    const response = axiosInstance.post('/roadmap/generate', data);
-    toast.promise(response, {
-      success: (res) => res?.data?.message || 'Roadmap generated!',
+    const responsePromise = axiosInstance.post('/roadmap/generate', payload);
+    toast.promise(responsePromise, {
       loading: 'Generating roadmap...',
-      error: 'Ohh No!, Something went wrong.',
+      success: 'Roadmap ready!',
+      error: 'Generation failed!',
     });
-    return (await response).data;
+    const response = await responsePromise;
+    return response.data;
   } catch (error) {
-    throw error;
+    return rejectWithValue(error.response?.data?.message || "Failed to generate roadmap");
   }
 });
 
-export const saveRoadmap = createAsyncThunk('/roadmap/saveThunk', async (payload) => {
+export const saveRoadmap = createAsyncThunk('/roadmap/save', async (payload, { rejectWithValue }) => {
   try {
-    const response = axiosInstance.post('/roadmap/generate/save', payload);
-    toast.promise(response, {
-      success: (res) => res?.data?.message || 'Roadmap saved!',
+    const responsePromise = axiosInstance.post('/roadmap/save', payload);
+    toast.promise(responsePromise, {
       loading: 'Saving roadmap...',
-      error: 'Something went wrong!',
+      success: 'Roadmap saved!',
+      error: 'Save failed!',
     });
-    return (await response).data;
+    const response = await responsePromise;
+    return response.data;
   } catch (error) {
-    throw error;
+    return rejectWithValue(error.response?.data?.message || "Failed to save roadmap");
   }
 });
 
-const roadmapSlice = createSlice({
-  name: 'roadmap',
+// ========== Slice ==========
+
+const goalSlice = createSlice({
+  name: 'goal',
   initialState,
   reducers: {
-    setRoadmapContent(state, action) {
-      state.roadmapContent = action.payload;
+    setRoadmap(state, action) {
+      state.roadmap = action.payload;
     },
+    clearRoadmap(state) {
+      state.roadmap = "";
+    }
   },
   extraReducers: (builder) => {
     builder
-      .addCase(generateRoadmap.pending, (state) => {
-        state.loading = true;
-        state.error = null;
-      })
-      .addCase(generateRoadmap.fulfilled, (state, action) => {
-        state.loading = false;
-         state.roadmapContent = action.payload.suggestedRoadmap; // ✅ fix here
-      })
-      .addCase(generateRoadmap.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.error.message;
-      })
+      // Add Goal
       .addCase(addGoal.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -87,8 +80,24 @@ const roadmapSlice = createSlice({
       })
       .addCase(addGoal.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.error.message;
+        state.error = action.payload || action.error.message;
       })
+
+      // Generate Roadmap
+      .addCase(generateRoadmap.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(generateRoadmap.fulfilled, (state, action) => {
+        state.loading = false;
+        state.roadmap = action.payload?.suggestedRoadmap || "";
+      })
+      .addCase(generateRoadmap.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload || action.error.message;
+      })
+
+      // Save Roadmap
       .addCase(saveRoadmap.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -98,10 +107,12 @@ const roadmapSlice = createSlice({
       })
       .addCase(saveRoadmap.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.error.message;
+        state.error = action.payload || action.error.message;
       });
   }
 });
 
-export const { setRoadmapContent } = roadmapSlice.actions; // ✅ fix here
-export default roadmapSlice.reducer;
+// ========== Exports ==========
+
+export const { setRoadmap, clearRoadmap } = goalSlice.actions;
+export default goalSlice.reducer;

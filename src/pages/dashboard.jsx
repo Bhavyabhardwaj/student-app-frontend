@@ -1,7 +1,9 @@
 import React from "react";
+import Layout from "../layout/layout";
 
 export default function Dashboard() {
   return (
+    <Layout>
     <div className="min-h-screen bg-gray-50 p-6">
       <h1 className="text-3xl font-bold text-gray-800 mb-4">Welcome to PathVibe Dashboard</h1>
       
@@ -25,5 +27,6 @@ export default function Dashboard() {
         </div>
       </div>
     </div>
+    </Layout>
   );
 }
