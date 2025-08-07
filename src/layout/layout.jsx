@@ -1,13 +1,24 @@
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import logoutSVG from '../assets/logout-2-svgrepo-com.svg'
 import notificationSVG from '../assets/notification-bell-on-svgrepo-com.svg'
 import profileSVG from '../assets/user-profile-person-svgrepo-com.svg'
 import logo from '../assets/logo2.png'
+import { logout } from '../redux/slices/authSlice';
+import { useDispatch, useSelector } from 'react-redux';
 
 
 
 function Layout({ children }) {
     const navigate = useNavigate();
+    const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+     const dispatch = useDispatch(); // 👈 Move here (top of component)
+
+async function handleLogout(e) {
+  e.preventDefault();
+  dispatch(logout()); // Dispatch the logout thunk
+  navigate('/login'); // Optional: redirect to login after logout
+}
+
 
     return (
         <>
@@ -34,8 +45,17 @@ function Layout({ children }) {
                         <li className="hover:text-indigo-600 cursor-pointer" onClick={() => navigate('/profile')}><img src={profileSVG} className='h-10 w-auto'/></li>
                         <li className="hover:text-indigo-600 cursor-pointer" onClick={() => navigate('/notifications')}><img src={notificationSVG} className='h-6 w-auto'/></li>
                         {/*<li className="hover:text-indigo-600 cursor-pointer" onClick={() => navigate('/logout')}> <img src={logoutSVG} className="h-6 w-auto " />
+                        
 </li>*/}
+                     <li className='hover:text-[#FF9110]'>
+                            {isLoggedIn ? (
+                                <Link onClick={handleLogout}>Logout</Link>
+                            ) : (
+                               ""
+                            )}
+                        </li>
                     </ul>
+                    
                 </div>
             </nav>
 

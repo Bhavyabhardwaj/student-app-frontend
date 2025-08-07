@@ -8,7 +8,7 @@ import logo from '../assets/logo2.png'
 
 function Layout2({ children }) {
     const navigate = useNavigate();
-
+    
     return (
         <>
             <nav className="flex items-center justify-between h-16 px-6 text-blue-900 font-mono shadow-md">
