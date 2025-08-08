@@ -45,7 +45,7 @@ export default function SetGoal() {
 
   // Save roadmap to backend
   const handleSaveRoadmap = async () => {
-    if (!roadmap || !goal) return;
+    if (!roadmap ) return;
     const payload = {
       roadmapName: goal,
       content: roadmap,

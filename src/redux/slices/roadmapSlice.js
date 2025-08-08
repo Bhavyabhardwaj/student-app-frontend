@@ -42,7 +42,7 @@ export const generateRoadmap = createAsyncThunk('/roadmap/generate', async (payl
 
 export const saveRoadmap = createAsyncThunk('/roadmap/save', async (payload, { rejectWithValue }) => {
   try {
-    const responsePromise = axiosInstance.post('/roadmap/save', payload);
+    const responsePromise = axiosInstance.post('/roadmap/generate/save', payload);
     toast.promise(responsePromise, {
       loading: 'Saving roadmap...',
       success: 'Roadmap saved!',
@@ -55,7 +55,6 @@ export const saveRoadmap = createAsyncThunk('/roadmap/save', async (payload, { r
   }
 });
 
-// ========== Slice ==========
 
 const goalSlice = createSlice({
   name: 'goal',
@@ -112,7 +111,7 @@ const goalSlice = createSlice({
   }
 });
 
-// ========== Exports ==========
+
 
 export const { setRoadmap, clearRoadmap } = goalSlice.actions;
 export default goalSlice.reducer;
