@@ -6,6 +6,7 @@ const initialState = {
   loading: false,
   error: null,
   roadmap: "",
+   goals: [], 
 };
 
 // ========== Thunks ==========
@@ -54,6 +55,28 @@ export const saveRoadmap = createAsyncThunk('/roadmap/save', async (payload, { r
     return rejectWithValue(error.response?.data?.message || "Failed to save roadmap");
   }
 });
+
+export const fetchGoals = createAsyncThunk('/goal/fetch', async (_, { rejectWithValue }) => {
+  try {
+    const response = await axiosInstance.get('/goal/showAll');
+    return response.data.data;  
+  } catch (error) {
+    return rejectWithValue(error.response?.data?.message || "Failed to fetch goals");
+  }
+});
+
+export const deleteGoal = createAsyncThunk('/goal/delete', async (goalId, { rejectWithValue }) => {
+  try {
+    const res = await axiosInstance.delete(`/goal/deleteGoal/${goalId}`);
+    toast.success("Goal deleted successfully!");
+    return goalId; // return only the deleted goal ID
+  } catch (error) {
+    toast.error("Failed to delete goal");
+    return rejectWithValue(error.response?.data?.message || "Delete failed");
+  }
+});
+
+
 
 
 const goalSlice = createSlice({
@@ -107,7 +130,27 @@ const goalSlice = createSlice({
       .addCase(saveRoadmap.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload || action.error.message;
-      });
+      })
+
+      // Fetch Goals
+.addCase(fetchGoals.pending, (state) => {
+  state.loading = true;
+  state.error = null;
+})
+.addCase(fetchGoals.fulfilled, (state, action) => {
+  state.loading = false;
+  state.goals = action.payload; // array of goals
+})
+.addCase(fetchGoals.rejected, (state, action) => {
+  state.loading = false;
+  state.error = action.payload || action.error.message;
+})
+
+.addCase(deleteGoal.fulfilled, (state, action) => {
+  state.goals = state.goals.filter((goal) => goal._id !== action.payload);
+})
+;
+
   }
 });
 

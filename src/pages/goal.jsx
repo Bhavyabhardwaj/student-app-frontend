@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addGoal, generateRoadmap, saveRoadmap } from "../redux/slices/roadmapSlice";
+import { addGoal, generateRoadmap, saveRoadmap,fetchGoals,deleteGoal } from "../redux/slices/roadmapSlice";
 import Layout from "../layout/layout";
 
 export default function SetGoal() {
@@ -11,8 +11,10 @@ export default function SetGoal() {
   const [deadline, setDeadline] = useState("");
   const [roadmap, setRoadmap] = useState("");
   const [roadmapLoading, setRoadmapLoading] = useState(false);
+  const goals = useSelector((state) => state.roadmap.goals);
 
-  // Save goal to backend
+
+
   const handleSave = async () => {
     if (!goal || !deadline) return;
 
@@ -26,6 +28,8 @@ export default function SetGoal() {
     setGoal("");
     setDeadline("");
   };
+
+  
 
   // Generate roadmap
   const handleGenerateRoadmap = async () => {
@@ -93,6 +97,43 @@ export default function SetGoal() {
               {loading ? "Adding..." : "Add Goal"}
             </button>
           </div>
+
+      {/*my goals */}
+         <div>
+           <button
+              onClick={() => dispatch(fetchGoals())}
+              className="w-full py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition"
+            >
+            Show My Goals
+         </button>
+        </div>
+
+       {goals.length > 0 && (
+  <div className="mt-6">
+    <h3 className="text-xl font-semibold text-gray-700 mb-2">🎯 My Goals:</h3>
+    <ul className="space-y-2">
+      {goals.map((goalItem) => (
+        <li key={goalItem._id} className="bg-gray-100 p-4 rounded-md shadow flex justify-between items-start">
+          <div>
+            <p><span className="font-semibold">Goal:</span> {goalItem.goal}</p>
+            <p><span className="font-semibold">Category:</span> {goalItem.category}</p>
+            <p><span className="font-semibold">Deadline:</span> {new Date(goalItem.deadline).toLocaleDateString()}</p>
+            <p><span className="font-semibold">Status:</span> {goalItem.status}</p>
+            <p><span className="font-semibold">Progress:</span> {goalItem.progress}%</p>
+          </div>
+          <button
+            onClick={() => dispatch(deleteGoal(goalItem._id))}
+            className="ml-4 text-red-600 hover:text-red-800 font-semibold"
+          >
+            ❌ Delete
+          </button>
+        </li>
+      ))}
+    </ul>
+  </div>
+)}
+
+
 
           {/* Generate Roadmap Button */}
           <div>

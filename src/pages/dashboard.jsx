@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from "react";
 import Layout from "../layout/layout";
 import { Moon, Sun, Bell } from "lucide-react";
+import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function Dashboard() {
   const [darkMode, setDarkMode] = useState(false);
   const [quote, setQuote] = useState("");
   const [author, setAuthor] = useState("");
+      const navigate = useNavigate();
 
   useEffect(() => {
     async function fetchQuote() {
@@ -62,7 +65,8 @@ export default function Dashboard() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
           {/* Card 1 */}
           <div className="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-md hover:shadow-lg transition">
-            <h2 className="text-xl font-semibold mb-2">📚 Your Roadmaps</h2>
+            <Link></Link>
+            <h2 className="hover:text-indigo-600 cursor-pointer text-2xl" onClick={() => navigate('/roadmap')}>Your Roadmap</h2>
             <p className="text-gray-600 dark:text-gray-300">
               Continue or explore new roadmaps.
             </p>
@@ -78,7 +82,7 @@ export default function Dashboard() {
 
           {/* Card 3 */}
           <div className="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-md hover:shadow-lg transition">
-            <h2 className="text-xl font-semibold mb-2">👤 Profile</h2>
+            <h2 className="hover:text-indigo-600 cursor-pointer text-2xl" onClick={() => navigate('/profile')}>👤 Profile</h2>
             <p className="text-gray-600 dark:text-gray-300">
               View and update your information.
             </p>

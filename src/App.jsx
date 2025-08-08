@@ -22,6 +22,7 @@ import Achievements from './pages/navbarPages/achievement';
 import Progress from './pages/navbarPages/progress';
 import Profile from './pages/navbarPages/profile';
 import Notifications from './pages/navbarPages/notification';
+import Feedback from './pages/navbarPages/feedback';
 
 
 export default function App() {
@@ -50,6 +51,7 @@ export default function App() {
               <Route path="/progress" element={<Progress/>} />
                <Route path="/profile" element={<Profile/>} />
                <Route path="/notifications" element={<Notifications/>} />
+                <Route path="/feedback" element={<Feedback/>} />
 
 
 

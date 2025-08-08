@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import ReactMarkdown from "react-markdown";
+import Layout from "../layout/layout";
 
 const topics = [
   {
@@ -89,6 +90,7 @@ const RoadmapPage = () => {
   const completionPercent = Math.round((completedTopics.size / topics.length) * 100);
 
   return (
+    <Layout>
     <div className={darkMode ? "dark bg-gray-900 text-white min-h-screen" : "bg-white text-gray-900 min-h-screen"}>
       <div className="flex">
         {/* Sidebar */}
@@ -199,6 +201,7 @@ const RoadmapPage = () => {
         </div>
       </div>
     </div>
+    </Layout>
   );
 };
 

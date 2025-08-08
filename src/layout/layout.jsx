@@ -34,8 +34,8 @@ async function handleLogout(e) {
 
                 
                 <div className="hidden md:block">
-                    <ul className="flex gap-6 text-sm font-bold px-20">
-                        <li className="hover:text-indigo-600 cursor-pointer" onClick={() => navigate('/')}>Home</li>
+                    <ul className="flex gap-4 text-sm font-bold px-20">
+                       
                         <li className="hover:text-indigo-600 cursor-pointer" onClick={() => navigate('/dashboard')}>Dashboard</li>
                         <li className="hover:text-indigo-600 cursor-pointer" onClick={() => navigate('/goal')}>Goals</li>
                         <li className="hover:text-indigo-600 cursor-pointer" onClick={() => navigate('/calendar')}>Calendar</li>
@@ -43,6 +43,7 @@ async function handleLogout(e) {
                         <li className="hover:text-indigo-600 cursor-pointer" onClick={() => navigate('/achievements')}>Achievements</li>
                         <li className="hover:text-indigo-600 cursor-pointer" onClick={() => navigate('/progress')}>Progress</li>
                         <li className="hover:text-indigo-600 cursor-pointer" onClick={() => navigate('/folders')}>Study Material</li>
+                         <li className="hover:text-indigo-600 cursor-pointer" onClick={() => navigate('/feedback')}>Feedback</li>
                         <li className="hover:text-indigo-600 cursor-pointer" onClick={() => navigate('/profile')}><img src={profileSVG} className='h-10 w-auto'/></li>
                         <li className="hover:text-indigo-600 cursor-pointer" onClick={() => navigate('/notifications')}><img src={notificationSVG} className='h-6 w-auto'/></li>
                         {/*<li className="hover:text-indigo-600 cursor-pointer" onClick={() => navigate('/logout')}> <img src={logoutSVG} className="h-6 w-auto " />
