@@ -2,7 +2,7 @@ import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
-import { Route,Routes } from 'react-router-dom';
+import { Route,Routes,Navigate } from 'react-router-dom';
 import Home from './pages/home';
 import Login from './pages/auth/login';
 import Signup from './pages/auth/signup';
@@ -23,18 +23,36 @@ import Progress from './pages/navbarPages/progress';
 import Profile from './pages/navbarPages/profile';
 import Notifications from './pages/navbarPages/notification';
 import Feedback from './pages/navbarPages/feedback';
+import { useSelector } from 'react-redux';
+import UserRoadmaps from './pages/allRoadmaps';
+import RoadmapDetails from './pages/roadmapContent';
 
 
 export default function App() {
+  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn)
   return (
     <>
     <Routes>
+          <Route
+        path="/"
+        element={isLoggedIn ? <Navigate to="/dashboard" /> : <Home />}
+          />
+     
         <Route path="/" element={<Home />} />
+
+        <Route path="/home" element={<Home />} />
          <Route path="/signup" element={<Signup/>} />
          <Route path="/login" element={<Login />} />
          <Route path="/dashboard" element={<Dashboard />} />
          <Route path="/goal" element={<Goal />} />
           <Route path="/roadmap" element={<RoadmapPage/>} />
+          <Route path="/allroadmaps" element={<UserRoadmaps/>} />
+
+            <Route path="/roadmap/:id" element={<RoadmapDetails/>} />
+
+          
+
+          
 
 
 

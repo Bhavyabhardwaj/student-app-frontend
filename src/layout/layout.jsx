@@ -16,7 +16,7 @@ function Layout({ children }) {
 async function handleLogout(e) {
   e.preventDefault();
   dispatch(logout()); // Dispatch the logout thunk
-  navigate('/login'); // Optional: redirect to login after logout
+  navigate('/home'); // Optional: redirect to login after logout
 }
 
 

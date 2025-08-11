@@ -9,8 +9,8 @@ import Layout2 from '../layout/layout2';
 export default function Home() {
   return (
     <Layout2>
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-700 flex flex-col">
-      
+    <div className="min-h-screen  flex flex-col">
+      bg-gradient-to-br from-blue-50 to-indigo-700
       
       {/*  Main section */}
       <div className="flex-grow flex items-center justify-center px-6">

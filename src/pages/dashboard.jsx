@@ -66,7 +66,7 @@ export default function Dashboard() {
           {/* Card 1 */}
           <div className="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-md hover:shadow-lg transition">
             <Link></Link>
-            <h2 className="hover:text-indigo-600 cursor-pointer text-2xl" onClick={() => navigate('/roadmap')}>Your Roadmap</h2>
+            <h2 className="hover:text-indigo-600 cursor-pointer text-2xl" onClick={() => navigate('/allroadmaps')}>Your Roadmap</h2>
             <p className="text-gray-600 dark:text-gray-300">
               Continue or explore new roadmaps.
             </p>
@@ -118,13 +118,13 @@ export default function Dashboard() {
           <div className="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-md">
             <h2 className="text-2xl font-semibold mb-4">⚡ Quick Links</h2>
             <div className="flex flex-wrap gap-3">
-              <button className="bg-indigo-600 text-white px-4 py-2 rounded-xl hover:bg-indigo-700">
+              <button className="bg-indigo-600 text-white px-4 py-2 rounded-xl hover:bg-indigo-700" onClick={()=>navigate('/goal')}>
                 Add New Goal
               </button>
-              <button className="bg-green-600 text-white px-4 py-2 rounded-xl hover:bg-green-700">
+              <button className="bg-green-600 text-white px-4 py-2 rounded-xl hover:bg-green-700" onClick={()=>navigate('/calendar')}>
                 View Calendar
               </button>
-              <button className="bg-yellow-500 text-white px-4 py-2 rounded-xl hover:bg-yellow-600">
+              <button className="bg-yellow-500 text-white px-4 py-2 rounded-xl hover:bg-yellow-600" onClick={()=>navigate('/premium')}>
                 Upgrade to Premium
               </button>
             </div>

@@ -9,7 +9,7 @@ const initialState = {
    goals: [], 
 };
 
-// ========== Thunks ==========
+
 
 export const addGoal = createAsyncThunk('/goal/add', async (payload, { rejectWithValue }) => {
   try {
