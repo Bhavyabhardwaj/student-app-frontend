@@ -3,6 +3,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axiosInstance from "../../api/axios";
 import toast from "react-hot-toast";
 
+
 // Thunk to fetch all roadmaps
 export const fetchAllRoadmaps = createAsyncThunk(
   "roadmaps/fetchAll",
@@ -19,6 +20,17 @@ export const fetchAllRoadmaps = createAsyncThunk(
     }
   }
 );
+export const deleteRoadmap = createAsyncThunk('/roadmap/delete', async (roadmapId, { rejectWithValue }) => {
+  try {
+    const res = await axiosInstance.delete(`/roadmap/delete/${roadmapId}`);
+    toast.success("roadmap deleted successfully!");
+    return roadmapId; // return only the deleted goal ID
+  } catch (error) {
+    toast.error("Failed to delete goal");
+    return rejectWithValue(error.response?.data?.message || "Delete failed");
+  }
+});
+
 
 const showAllRoadmapsSlice = createSlice({
   name: "showAllRoadmaps",
@@ -41,7 +53,14 @@ const showAllRoadmapsSlice = createSlice({
       .addCase(fetchAllRoadmaps.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
-      });
+      })
+      .addCase(deleteRoadmap.fulfilled, (state, action) => {
+    state.roadmaps = state.roadmaps.filter(
+        (roadmap) => roadmap._id !== action.payload
+    );
+});
+
+      
   },
 });
 

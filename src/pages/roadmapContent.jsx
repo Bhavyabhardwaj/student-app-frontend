@@ -74,8 +74,8 @@ export default function RoadmapDetails() {
         {/* Start Button */}
         <div className="mt-8 flex justify-center">
           <button
-            onClick={() => navigate(`/roadmap/${id}/start`)}
-            className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition"
+            onClick={() => navigate('/start')}
+            className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition" 
           >
             Start
           </button>

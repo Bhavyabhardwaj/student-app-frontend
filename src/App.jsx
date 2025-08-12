@@ -26,6 +26,7 @@ import Feedback from './pages/navbarPages/feedback';
 import { useSelector } from 'react-redux';
 import UserRoadmaps from './pages/allRoadmaps';
 import RoadmapDetails from './pages/roadmapContent';
+import RoadmapLayout from './pages/start';
 
 
 export default function App() {
@@ -49,6 +50,8 @@ export default function App() {
           <Route path="/allroadmaps" element={<UserRoadmaps/>} />
 
             <Route path="/roadmap/:id" element={<RoadmapDetails/>} />
+
+            <Route path="/start" element={<RoadmapLayout/>} />
 
           
 

@@ -2,7 +2,8 @@ import React, { useEffect } from "react";
 import Layout from "../layout/layout";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchAllRoadmaps } from "../redux/slices/myRoadmapSlice"; // apna slice import
+import { fetchAllRoadmaps, deleteRoadmap } from "../redux/slices/myRoadmapSlice"; // delete import
+import { MdDelete } from "react-icons/md";
 
 export default function UserRoadmaps() {
   const navigate = useNavigate();
@@ -11,11 +12,17 @@ export default function UserRoadmaps() {
   const { roadmaps, loading, error } = useSelector(
     (state) => state.showAllRoadmaps
   );
-  const user = useSelector((state) => state.auth.userData); // auth slice se user data
+  const user = useSelector((state) => state.auth.userData);
 
   useEffect(() => {
     dispatch(fetchAllRoadmaps());
   }, [dispatch]);
+
+  const handleDelete = (id) => {
+    if (window.confirm("Are you sure you want to delete this roadmap?")) {
+      dispatch(deleteRoadmap(id));
+    }
+  };
 
   return (
     <Layout>
@@ -48,8 +55,16 @@ export default function UserRoadmaps() {
             roadmaps.map((roadmap) => (
               <div
                 key={roadmap._id}
-                className="bg-white dark:bg-gray-800 p-5 rounded-xl shadow hover:shadow-lg transition"
+                className="relative bg-white dark:bg-gray-800 p-5 rounded-xl shadow hover:shadow-lg transition"
               >
+                {/* Delete icon */}
+                <button
+                  className="absolute top-3 right-3 text-red-500 hover:text-red-700"
+                  onClick={() => handleDelete(roadmap._id)}
+                >
+                  <MdDelete size={20} />
+                </button>
+
                 <h3 className="text-xl font-bold text-gray-800 dark:text-white mb-2">
                   {roadmap.roadmapName || "Untitled Roadmap"}
                 </h3>
@@ -57,10 +72,8 @@ export default function UserRoadmaps() {
                   🎯 Goal: {roadmap.goalName || "No goal specified"}
                 </p>
                 <p className="text-sm text-gray-600 dark:text-gray-300 mb-1">
-                  🗓️ deadline:{roadmap.deadline}
-             
+                  🗓️ Deadline: {roadmap.deadline}
                 </p>
-              
 
                 <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2 mb-4">
                   <div
