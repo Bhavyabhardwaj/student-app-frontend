@@ -2,102 +2,95 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axiosInstance from "../../api/axios";
 import toast from "react-hot-toast";
 
+// Safely parse localStorage data
 let parsedData = {};
 try {
-  const storedData = localStorage.getItem('data');
+  const storedData = localStorage.getItem("data");
   parsedData = storedData ? JSON.parse(storedData) : {};
 } catch (error) {
   console.warn("Invalid JSON in localStorage for 'data'", error);
-  parsedData = {};
 }
 
 const initialState = {
-  isLoggedIn: localStorage.getItem('isLoggedIn') === 'true' || false,
-  role: localStorage.getItem('role') || '',
+  isLoggedIn: localStorage.getItem("isLoggedIn") === "true",
+  role: localStorage.getItem("role") || "",
   data: parsedData,
 };
 
+// Helper to show toast.promise
+const showToastPromise = (promise, loadingMsg) => {
+  toast.promise(promise, {
+    success: (res) => res?.data?.message || "Success",
+    loading: loadingMsg,
+    error: (err) =>
+      err?.response?.data?.message || "Ohh No!, Something went wrong.",
+  });
+};
 
-export const createAccount = createAsyncThunk('/auth/createAccount', async (data) => {
-    console.log("incoming data to the thunk", data);
-    try {
-        const response = axiosInstance.post('/users', data);    
-        toast.promise(response, {
-            success: (resolvedPromise) => {
-                return resolvedPromise?.data?.message;
-            },
-            loading: 'Hold back tight, we are registering your id...',
-            error: 'Ohh No!, Something went wrong. Please try again.',
-        });
-        const apiResponse = await response;
-        return apiResponse;
-    } catch(error) {
-        console.log(error);
-    }
+// Create Account
+export const createAccount = createAsyncThunk("/auth/createAccount", async (data, { rejectWithValue }) => {
+  try {
+    const responsePromise = axiosInstance.post("/users", data);
+    showToastPromise(responsePromise, "Hold back tight, we are registering your id...");
+    const response = await responsePromise;
+    return response;
+  } catch (error) {
+    console.error(error);
+    return rejectWithValue(error?.response?.data);
+  }
 });
 
-export const login = createAsyncThunk('/auth/login', async (data) => {
-    console.log("incoming data to the thunk", data);
-    try {
-        const response = axiosInstance.post('/auth/login', data);    
-        toast.promise(response, {
-            success: (resolvedPromise) => {
-                return resolvedPromise?.data?.message;
-            },
-            loading: 'Hold back tight, we are registering your id...',
-            error: 'Ohh No!, Something went wrong. Please try again.',
-        });
-        const apiResponse = await response;
-        return apiResponse;
-    } catch(error) {
-        console.log(error);
-    }
+// Login
+export const login = createAsyncThunk("/auth/login", async (data, { rejectWithValue }) => {
+  try {
+    const responsePromise = axiosInstance.post("/auth/login", data);
+    showToastPromise(responsePromise, "Logging you in...");
+    const response = await responsePromise;
+    return response;
+  } catch (error) {
+    console.error(error);
+    return rejectWithValue(error?.response?.data);
+  }
 });
 
-export const logout = createAsyncThunk('/auth/logout', async () => {
-    console.log("incoming data to the thunk");
-    try {
-        const response = axiosInstance.post('/auth/logout');    
-        toast.promise(response, {
-            success: (resolvedPromise) => {
-                return resolvedPromise?.data?.message;
-            },
-            loading: 'Logging out...',
-            error: 'Ohh No!, Something went wrong. Please try again.',
-        });
-        const apiResponse = await response;
-        return apiResponse;
-    } catch(error) {
-        console.log(error);
-    }
+// Logout
+export const logout = createAsyncThunk("/auth/logout", async (_, { rejectWithValue }) => {
+  try {
+    const responsePromise = axiosInstance.post("/auth/logout");
+    showToastPromise(responsePromise, "Logging out...");
+    const response = await responsePromise;
+    return response;
+  } catch (error) {
+    console.error(error);
+    return rejectWithValue(error?.response?.data);
+  }
 });
 
 const AuthSlice = createSlice({
-    name: 'auth',
-    initialState,
-    reducers: {},
-    extraReducers: (builder) => {
-        builder
-        .addCase(login.fulfilled, (state, action) => {
-            // reducer which will execute when the login thunk is fulfilled
-            state.isLoggedIn = true;
-            state.role = action?.payload?.data?.data?.userRole,
-            state.data = action?.payload?.data?.data?.userData
+  name: "auth",
+  initialState,
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(login.fulfilled, (state, action) => {
+        state.isLoggedIn = true;
+        state.role = action?.payload?.data?.data?.userRole || "";
+        state.data = action?.payload?.data?.data?.userData || {};
 
-            localStorage.setItem('isLoggedIn', true);
-            localStorage.setItem('role', action?.payload?.data?.data?.userRole);
-            localStorage.setItem('data', JSON.stringify(action?.payload?.data?.data?.userData));
-        })
-        .addCase(logout.fulfilled, (state) => {
-            // reducer which will execute when the logout thunk is fulfilled
-            localStorage.setItem('isLoggedIn', false);
-            localStorage.setItem('role', '');
-            localStorage.setItem('data', JSON.stringify({}));
-            state.isLoggedIn = false;
-            state.role = '';
-            state.data = {};
-        })
-    }
+        localStorage.setItem("isLoggedIn", "true");
+        localStorage.setItem("role", state.role);
+        localStorage.setItem("data", JSON.stringify(state.data));
+      })
+      .addCase(logout.fulfilled, (state) => {
+        state.isLoggedIn = false;
+        state.role = "";
+        state.data = {};
+
+        localStorage.setItem("isLoggedIn", "false");
+        localStorage.setItem("role", "");
+        localStorage.setItem("data", JSON.stringify({}));
+      });
+  },
 });
 
 export default AuthSlice.reducer;
