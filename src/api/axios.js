@@ -1,19 +1,10 @@
 import axios from "axios";
 
-const axiosInstance = axios.create({
-  baseURL: import.meta.env.VITE_BACKEND_URL,
-  withCredentials: true
-});
+const axiosInstance = axios.create(); // Create a new instance of axios
 
-// Add token to every request
-axiosInstance.interceptors.request.use((config) => {
-  const token = localStorage.getItem("token"); 
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
-  }
-  return config;
-}, (error) => {
-  return Promise.reject(error);
-});
+axiosInstance.defaults.baseURL = import.meta.env.VITE_BACKEND_URL; // Set the base URL
 
+axiosInstance.defaults.withCredentials = true; 
+// Allow cookies to be sent with requests
+ 
 export default axiosInstance;
