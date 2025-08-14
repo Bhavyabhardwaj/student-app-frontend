@@ -13,9 +13,13 @@ export default function Signup() {
 
     const [signUpState, setSignUpState] = useState({
         firstName: '',
+        lastName:'',
         email: '',
         mobileNumber: '',
-        password: ''
+        password: '',
+        profession:'',
+        skills:''
+
     });
 
     function handleUserInput(e) {
@@ -77,6 +81,9 @@ export default function Signup() {
               required
             />
           </div>
+
+         
+
 
           <div>
             <label htmlFor="lastName" className="block text-sm font-medium text-gray-700">Last Name</label>
@@ -142,6 +149,34 @@ export default function Signup() {
               required
             />
           </div>
+
+           <div>
+            <label htmlFor="skills" className="block text-sm font-medium text-gray-700">Skills</label>
+            <input
+              id="skills"
+              name="skills"
+              type="text"
+              className="w-full px-4 py-2 border rounded-md"
+              value={signUpState.skills}
+              onChange={handleUserInput}
+      
+            />
+          </div>
+
+          <div>
+            <label htmlFor="profession" className="block text-sm font-medium text-gray-700">Profession</label>
+            <input
+              id="profession"
+              name="profession"
+              type="text"
+              className="w-full px-4 py-2 border rounded-md"
+              value={signUpState.profession}
+              onChange={handleUserInput}
+      
+            />
+          </div>
+          
+
 
           <button
             type="submit"
