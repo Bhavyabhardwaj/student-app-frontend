@@ -74,7 +74,7 @@ export default function Dashboard() {
 
           {/* Card 2 */}
           <div className="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-md hover:shadow-lg transition">
-            <h2 className="text-xl font-semibold mb-2">✨ Suggested Content</h2>
+            <h2 className="text-xl font-semibold mb-2 hover:text-indigo-500 cursor-pointer " onClick={() => navigate('/contentSuggest')}>✨ Suggest Content</h2>
             <p className="text-gray-600 dark:text-gray-300">
               Based on your interests & goals.
             </p>

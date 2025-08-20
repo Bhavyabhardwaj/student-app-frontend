@@ -127,7 +127,7 @@ export default function SetGoal() {
                   {goals.map((goalItem) => (
                     <li
                       key={goalItem._id}
-                      className="bg-gray-100 p-4 rounded-md shadow"
+                      className="bg-gray-100 hover:bg-gray-300 p-4 rounded-md shadow"
                     >
                       <div
                         className="cursor-pointer"

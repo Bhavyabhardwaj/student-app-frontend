@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import {React, useEffect, useState } from "react";
 import Layout from "../../layout/layout";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUserProfile } from "../../redux/slices/profileSlice";

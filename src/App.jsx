@@ -27,6 +27,9 @@ import { useSelector } from 'react-redux';
 import UserRoadmaps from './pages/allRoadmaps';
 import RoadmapDetails from './pages/roadmapContent';
 import RoadmapLayout from './pages/start';
+import ContentSuggestion from './pages/contentSuggestion';
+import UserContents from './pages/contents';
+import ContentDetails from './pages/contentText';
 
 
 export default function App() {
@@ -48,6 +51,9 @@ export default function App() {
          <Route path="/goal" element={<Goal />} />
           <Route path="/roadmap" element={<RoadmapPage/>} />
           <Route path="/allroadmaps" element={<UserRoadmaps/>} />
+           <Route path="/contentSuggest" element={<ContentSuggestion/>} />
+             <Route path="/myContents" element={<UserContents/>} />
+             <Route path="/contentText/:id" element={<ContentDetails/>} />
 
             <Route path="/roadmap/:id" element={<RoadmapDetails/>} />
 
