@@ -30,6 +30,7 @@ import RoadmapLayout from './pages/start';
 import ContentSuggestion from './pages/contentSuggestion';
 import UserContents from './pages/contents';
 import ContentDetails from './pages/contentText';
+import RoadmapContent from './pages/start';
 
 
 export default function App() {
@@ -57,7 +58,7 @@ export default function App() {
 
             <Route path="/roadmap/:id" element={<RoadmapDetails/>} />
 
-            <Route path="/start" element={<RoadmapLayout/>} />
+            <Route path="/start/:id" element={<RoadmapContent/>} />
 
           
 

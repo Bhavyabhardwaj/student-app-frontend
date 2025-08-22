@@ -2,10 +2,10 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import Layout from "../layout/layout";
-import axiosInstance from "../api/axios"; 
+import axiosInstance from "../api/axios";
 
 export default function RoadmapDetails() {
-  const { id } = useParams(); 
+  const { id } = useParams();
   const navigate = useNavigate();
   const [roadmap, setRoadmap] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -74,8 +74,8 @@ export default function RoadmapDetails() {
         {/* Start Button */}
         <div className="mt-8 flex justify-center">
           <button
-            onClick={() => navigate('/start')}
-            className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition" 
+            onClick={() => navigate(`/start/${id}`)}   
+            className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition"
           >
             Start
           </button>
