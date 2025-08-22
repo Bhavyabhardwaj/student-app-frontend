@@ -44,7 +44,11 @@ export const createAccount = createAsyncThunk('/auth/createAccount', async (data
 export const login = createAsyncThunk('/auth/login', async (data) => {
     console.log("incoming data to the thunk", data);
     try {
-        const response = axiosInstance.post('/auth/login', data);    
+        const response = axiosInstance.post('/auth/login', data);
+        const token = response?.data?.token;
+        if (token) {
+            localStorage.setItem("authToken", token);
+        }
         toast.promise(response, {
             success: (resolvedPromise) => {
                 return resolvedPromise?.data?.message;
