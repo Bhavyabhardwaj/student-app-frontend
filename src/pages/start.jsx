@@ -106,9 +106,9 @@ export default function RoadmapContent() {
 
   return (
     <Layout>
-      <div className="flex flex-col md:flex-row min-h-[70vh]">
+      <div className="bg-gradient-to-br from-blue-50 to-indigo-700 flex flex-col md:flex-row min-h-[70vh]">
         {/* Mobile Topbar */}
-        <div className="md:hidden flex items-center justify-between bg-gray-100 dark:bg-gray-900 px-4 py-2 border-b border-gray-200 dark:border-gray-700">
+        <div className="md:hidden flex items-center justify-between bg-gradient-to-br from-blue-50 to-indigo-700 bg-gray-100 dark:bg-gray-900 px-4 py-2 border-b border-gray-200 dark:border-gray-700">
           <h2 className="text-lg font-semibold text-gray-800 dark:text-gray-200">
             {roadmap.roadmapName || "Modules"}
           </h2>
@@ -124,7 +124,7 @@ export default function RoadmapContent() {
         <aside
           className={`${
             sidebarOpen ? "block" : "hidden"
-          } md:block w-full md:w-72 bg-gray-100 dark:bg-gray-900 p-4 md:p-5 border-r border-gray-200 dark:border-gray-700 overflow-y-auto`}
+          } md:block w-full md:w-72 bg-gradient-to-br from-blue-50 to-indigo-700 bg-gray-100 dark:bg-gray-900 p-4 md:p-5 border-r border-gray-200 dark:border-gray-700 overflow-y-auto`}
         >
           <h2 className="hidden md:block text-lg font-semibold mb-3 text-gray-800 dark:text-gray-200">
             {roadmap.roadmapName || "Modules"}
@@ -203,7 +203,7 @@ export default function RoadmapContent() {
         </aside>
 
         {/* Content */}
-        <main className="flex-1 p-4 md:p-5 overflow-y-auto bg-white dark:bg-gray-800">
+        <main className="bg-gradient-to-br from-blue-50 to-indigo-700 flex-1 p-4 md:p-5 overflow-y-auto bg-white dark:bg-gray-800">
           {selected ? (
             <>
               <h1 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white mb-4">
