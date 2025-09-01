@@ -44,7 +44,7 @@ export const createAccount = createAsyncThunk('/auth/createAccount', async (data
 export const login = createAsyncThunk('/auth/login', async (data) => {
   try {
     const response = await axiosInstance.post('/auth/login', data);  // await here
-    const token = response?.data?.token;
+    const token = response?.data?.data?.token;
 
     if (token) {
       localStorage.setItem("authToken", token);
